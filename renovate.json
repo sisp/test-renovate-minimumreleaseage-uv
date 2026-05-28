@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": ["config:recommended", ":prConcurrentLimitNone", ":prHourlyLimitNone"],
+
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+
+  "packageRules": [
+    {
+      "matchDatasources": ["pypi"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "internalChecksFilter": "strict",
+      "matchDatasources": ["pypi"],
+      "minimumReleaseAge": "6 months"
+    },
+    {
+      "internalChecksFilter": "strict",
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "matchJsonata": ["\"uv.lock\" in lockFiles"],
+      "minimumReleaseAge": "6 months"
+    },
+    {
+      "description": "Do not require Minimum Release Age for package replacements",
+      "matchDatasources": ["pypi"],
+      "matchUpdateTypes": ["replacement"],
+      "minimumReleaseAge": null,
+      "prBodyNotes": [
+        "⚠️ Renovate's replacement functionality [does not currently](https://github.com/renovatebot/renovate/issues/39400) wire in the release age for a package, so the Minimum Release Age checks can apply. You will need to manually validate the Minimum Release Age for these package(s)."
+      ]
+    },
+    {
+      "description": "Do not require Minimum Release Age for package pinning",
+      "matchDatasources": ["pypi"],
+      "matchUpdateTypes": ["pin"],
+      "minimumReleaseAge": null,
+      "prBodyNotes": [
+        "⚠️ Renovate's pin functionality [does not currently](https://github.com/renovatebot/renovate/issues/40288) wire in the release age for a package, so the Minimum Release Age checks can apply. You will need to manually validate the Minimum Release Age for these package(s)."
+      ]
+    }
+  ]
+}
